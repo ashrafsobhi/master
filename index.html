@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ماستر ماركت</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(45deg, #1a1a1a, #2d2d2d);
+            color: #fff;
+            min-height: 100vh;
+            direction: rtl;
+        }
+
+        /* Floating Glass Sections */
+        .glass-section {
+            margin: 30px auto;
+            padding: 30px;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .glass-section:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            margin-top: 80px;
+        }
+        a  {
+            text-align: center;
+            padding: 0px;
+            margin-top: 50px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        a:hover{
+            color: #ff4444;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            color: #ff4444;
+            text-shadow: 0 0 15px rgba(255, 68, 68, 0.4);
+            margin-bottom: 15px;
+        }
+
+        /* Content Styling */
+        .content {
+            padding: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            padding: 12px;
+            margin: 8px 0;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        li:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        /* Buttons */
+        .glass-button {
+            display: block;
+            width: fit-content;
+            margin: 20px auto;
+            padding: 12px 35px;
+            background: rgba(255, 68, 68, 0.2);
+            border: 1px solid #ff4444;
+            color: #fff;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .glass-button:hover {
+            background: rgba(255, 68, 68, 0.3);
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.2);
+        }
+
+        /* Reviews Section */
+        .review {
+            padding: 20px;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .review-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-left: 15px;
+            border: 2px solid #ff4444;
+        }
+
+        /* Popup Form */
+        .popup {
+            /* Keep previous popup styles */
+            /* Add glass effect */
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(15px);
+        }
+
+        /* Map Section */
+        .map-container {
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            margin-top: 50px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Reviews Section */
+        .review {
+            padding: 20px;
+            margin: 20px 0;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .review-header img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            margin-left: 15px;
+            border: 2px solid #ff4444;
+        }
+
+        .review-rating {
+            color: #ffd700;
+            font-size: 20px;
+        }
+
+        /* Popup Form */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(30, 30, 30, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            width: 90%;
+            max-width: 400px;
+        }
+
+        .popup h2 {
+            margin-top: 0;
+            color: #ff4444;
+            text-align: center;
+        }
+
+        .popup input, .popup textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .popup textarea {
+            resize: vertical;
+            height: 100px;
+        }
+
+        .popup .stars {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .popup .stars span {
+            font-size: 24px;
+            color: #ffd700;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: color 0.3s ease;
+        }
+
+        .popup .stars span:hover,
+        .popup .stars span.active {
+            color: #ff4444;
+        }
+
+        .popup button {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 68, 68, 0.2);
+            border: 1px solid #ff4444;
+            color: #fff;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .popup button:hover {
+            background: rgba(255, 68, 68, 0.3);
+            box-shadow: 0 0 15px rgba(255, 68, 68, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Banner Section -->
+    <div class="glass-section header">
+        <h1>ماستر ماركت</h1>
+        <p>سوبر ماركت كل حاجاتك في مكان واحد!</p>
+    </div>
+
+    <!-- Products Section -->
+    <div class="glass-section">
+        <h2>المنتجات</h2>
+        <ul>
+            <li>منتجات ألبان</li>
+            <li>أطعمة مجمدة</li>
+            <li>مشروبات باردة</li>
+            <li>حلويات وتسالي</li>
+            <li>منظفات وأدوات منزلية</li>
+        </ul>
+    </div>
+
+    <!-- Payment Methods Section -->
+    <div class="glass-section">
+        <h2>طرق الدفع</h2>
+        <ul>
+            <li>فودافون كاش</li>
+            <li>إنستانت إنستاباي</li>
+        </ul>
+    </div>
+
+    <!-- Contact Section -->
+    <div class="glass-section">
+        <h2>اتصل بنا</h2>
+        <div class="glass-button" onclick="window.open('https://www.facebook.com/share/19HDwUpTAM/')">فيسبوك</div>
+        <div class="glass-button" onclick="window.open('https://wa.me/201206830450')">واتساب</div>
+        <div class="glass-button" onclick="window.location.href='tel:+201146557558'">تليفون</div>
+    </div>
+
+    <!-- Map Section -->
+    <div class="glass-section">
+        <h2>العنوان</h2>
+        <div class="map-container">
+            <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3453.676254579635!2d31.235947515114!3d30.044558981883!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzDCsDAyJzQwLjQiTiAzMcKwMTQnMTkuMyJF!5e0!3m2!1sen!2seg!4v1629999999999!5m2!1sen!2seg" 
+                    style="border:0; width:100%; height:100%"></iframe>
+        </div>
+    </div>
+
+     
+
+    <!-- Reviews Section -->
+    <div class="glass-section">
+        <h2>آراء العملاء</h2>
+        <div id="reviews-container">
+            <!-- Reviews loaded dynamically -->
+        </div>
+        <div class="glass-button" onclick="openPopup()">أضف تعليقك</div>
+    </div>
+
+    <!-- Popup Form for Adding a Review -->
+    <div class="popup" id="popup">
+        <h2>أضف تعليقك</h2>
+        <input type="text" id="name" placeholder="اسمك">
+        <input type="text" id="title" placeholder="عنوان التعليق">
+        <div class="stars" id="stars">
+            <span data-value="1">☆</span>
+            <span data-value="2">☆</span>
+            <span data-value="3">☆</span>
+            <span data-value="4">☆</span>
+            <span data-value="5">☆</span>
+        </div>
+        <textarea id="comment" placeholder="تعليقك"></textarea>
+        <button onclick="addReview()">إضافة</button>
+        <button onclick="closePopup()">إلغاء</button>
+    </div>
+<!-- Banner Section -->
+<div class="glass-section header">
+    <h1>MADE BY</h1>
+    <p> 2025 © <a href="">netopia academy</a></p>
+</div>
+
+    <script>
+           // Load saved reviews from localStorage
+           let reviews = JSON.parse(localStorage.getItem('reviews')) || [];
+
+// Function to display reviews
+function displayReviews() {
+    const container = document.getElementById('reviews-container');
+    container.innerHTML = '';
+    reviews.forEach((review, index) => {
+        const reviewDiv = document.createElement('div');
+        reviewDiv.className = 'review';
+        reviewDiv.innerHTML = `
+            <div class="review-header">
+                <img src="https://i.postimg.cc/rwsGmHVj/f-on-Tik-Tok.jpg" alt="Profile Picture">
+                <div class="customer-info">
+                    <h3>${review.name}</h3>
+                    <p>${review.title}</p>
+                </div>
+            </div>
+            <div class="review-rating">${'⭐️'.repeat(review.rating)}</div>
+            <div class="review-comment">${review.comment}</div>
+        `;
+        container.appendChild(reviewDiv);
+    });
+}
+
+// Function to open the popup
+function openPopup() {
+    document.getElementById('popup').style.display = 'block';
+}
+
+// Function to close the popup
+function closePopup() {
+    document.getElementById('popup').style.display = 'none';
+    resetPopup();
+}
+
+// Function to reset the popup fields
+function resetPopup() {
+    document.getElementById('name').value = '';
+    document.getElementById('title').value = '';
+    document.getElementById('comment').value = '';
+    resetStars();
+}
+
+// Function to reset star ratings
+function resetStars() {
+    const stars = document.querySelectorAll('#stars span');
+    stars.forEach(star => star.classList.remove('active'));
+}
+
+// Function to add a review
+function addReview() {
+    const name = document.getElementById('name').value;
+    const title = document.getElementById('title').value;
+    const rating = document.querySelector('#stars span.active')?.getAttribute('data-value') || 0;
+    const comment = document.getElementById('comment').value;
+
+    if (name && title && rating && comment) {
+        reviews.push({ name, title, rating, comment });
+        localStorage.setItem('reviews', JSON.stringify(reviews));
+        displayReviews();
+        closePopup();
+    } else {
+        alert('من فضلك املأ جميع الحقول.');
+    }
+}
+
+// Star Rating Interaction
+const stars = document.querySelectorAll('#stars span');
+stars.forEach(star => {
+    star.addEventListener('click', () => {
+        resetStars();
+        star.classList.add('active');
+        let value = star.getAttribute('data-value');
+        for (let i = 0; i < value; i++) {
+            stars[i].classList.add('active');
+        }
+    });
+});
+
+// Display reviews on page load
+displayReviews();
+    </script>
+</body>
+</html>
